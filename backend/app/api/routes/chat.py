@@ -1,5 +1,7 @@
 from fastapi import APIRouter
+from fastapi.responses import JSONResponse
 from app.api.models.chat_request import ChatRequest
+from app.agent.llm import get_agent_response
 
 router = APIRouter()
 
@@ -9,4 +11,5 @@ router = APIRouter()
 )
 def get_chat_response(chat_request: ChatRequest):
     # TODO: Get chat response from AI agent
-    return {"message": chat_request.message}
+    response = get_agent_response(chat_request.message)
+    return JSONResponse(content={"message": response})
