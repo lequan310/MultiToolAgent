@@ -11,9 +11,9 @@ qdrant-client = "^1.10.1"
 openai = "^1.37.1"
 fastapi = "^0.111.1"
 starlette = "0.37.2"
-llama-index = "^0.10.58"
-llama-index-llms-huggingface-api = "^0.1.0"
-llama-index-llms-huggingface = "^0.2.5"
+langchain = "^0.2.11"
+huggingface-hub = "^0.24.2"
+langchain-huggingface = "^0.0.3"
 
 
 [build-system]

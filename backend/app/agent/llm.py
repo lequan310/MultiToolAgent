@@ -1,18 +1,29 @@
-from llama_index.llms.huggingface_api import HuggingFaceInferenceAPI
-from llama_index.core.llms import ChatMessage, MessageRole
 from app.config import os
+from langchain_huggingface import HuggingFaceEndpoint
+from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
+from langchain_core.messages import HumanMessage, SystemMessage, AIMessage
 
-llm = HuggingFaceInferenceAPI(
-    model_name="mistralai/Mixtral-8x7B-Instruct-v0.1",
-    token=os.getenv("HF_INFERENCE_KEY"),
-    task="Text2Text Generation",  # conversational is deprecated
-    max_tokens=100,
+llm = HuggingFaceEndpoint(
+    # endpoint_url="https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
+    # inference_server_url="https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1",
+    repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1",
+    task="text-generation",
+    huggingfacehub_api_token=os.getenv("HF_API_TOKEN"),
+    cache=False,
+    seed=0,
 )
 
+messages = [
+    SystemMessage(
+        content="You're a lazy assistant. You give the shortest answer possible."
+    ),
+]
 
-def get_agent_response(message: str):
-    llm.system_prompt = (
-        "You are a lazy assistant who gives the shortest answer possible."
-    )
-    response = llm.chat([ChatMessage(role=MessageRole.USER, content=message)])
-    return response.message.content
+
+def get_llm_response(message: str):
+    messages.append(HumanMessage(content=message))
+    response = llm.invoke(messages)
+    response_content = response.split("System:", 1)[-1].strip()
+    messages.append(AIMessage(content=response_content))
+
+    return response_content
