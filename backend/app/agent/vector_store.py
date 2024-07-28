@@ -3,18 +3,15 @@ from app.config import os
 from app.agent.vectordb.qdrant import QdrantDB
 import asyncio
 
-if os.getenv("DOCKER_ENV"):
-    HOST = os.getenv("QDRANT_HOST")
-    PORT = os.getenv("QDRANT_PORT")
-else:
-    HOST = "localhost"
-    PORT = 6333
-
 embeddings = HuggingFaceEndpointEmbeddings(
     huggingfacehub_api_token=os.getenv("HF_API_TOKEN"),
-    repo_id="BAAI/bge-small-en-v1.5",  # Equivalent of Qdrant FastText embeddings
+    repo_id="BAAI/bge-small-en-v1.5",  # Equivalent of default Qdrant FastEmbed text embeddings
 )
-qdrant = QdrantDB(host=HOST, port=PORT, embeddings=embeddings)
+qdrant = QdrantDB(
+    host=os.getenv("QDRANT_HOST"),
+    port=int(os.getenv("QDRANT_PORT")),
+    embeddings=embeddings,
+)
 
 
 # if qdrant.collection_exists("test_collection"):
