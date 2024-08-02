@@ -5,7 +5,7 @@ from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
 from langchain.agents import AgentExecutor, create_react_agent
 from app.agent.prompts.agent import agent_prompt
-from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain.agents.format_scratchpad import format_log_to_str
 from app.agent.tools.pubmed import pubmed_tool
 from app.agent.tools.wikipedia import wikipedia_tool
 from app.agent.tools.tavily import search_tool
@@ -35,19 +35,20 @@ tools = [
     TavilySearchResults(max_results=3),
 ]
 
-
-agent = create_react_agent(llm=chat_model, tools=tools, prompt=agent_prompt)
+agent = create_react_agent(llm=chat_model, tools=custom_tools, prompt=agent_prompt)
 agent_executor = AgentExecutor(
     agent=agent,
-    tools=tools,
+    tools=custom_tools,
     verbose=True,
     handle_parsing_errors=True,
-    # return_intermediate_steps=True,
+    # return_intermediate_steps=False,
 )
 
 
 async def get_agent_response(message: str):
-    response = await agent_executor.ainvoke({"input": message})
+    response = await agent_executor.ainvoke(
+        {"input": message, "chat_history": chat_history}
+    )
     cleaned_response = response["output"].strip()
 
     chat_history.append(HumanMessage(content=message))

@@ -1,11 +1,9 @@
-from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
+from langchain.agents.format_scratchpad import format_log_to_str
 
-#    You MUST STOP after getting the final answer.
-
-# https://smith.langchain.com/hub/hwchase17/react
-agent_prompt = PromptTemplate.from_template(
-    """
-    You are an efficient agent. Answer the question as short as possible using the tools provided.
+react_prompt = """You are an efficient agent. 
+    For basic conversation, you can talk normally.
+    For questions that ask for information, answer the question as short as possible using the tools provided.
     You MUST NOT use your own knowledge to answer the question.
     You MUST USE the tools to answer the question instead of using your own knowledge.
     If you cannot find the answer using the provided tools, answer with 'I don't know'.
@@ -23,10 +21,13 @@ agent_prompt = PromptTemplate.from_template(
     ... (this Thought/Action/Action Input/Observation can repeat N times until you know the final answer)
 
     Thought: I now know the final answer
-    Final Answer: the final answer to the original input question.
+    Final Answer: the final answer to the original input question."""
 
-    Begin!
-
-    Question: {input}
-    Thought:{agent_scratchpad}"""
+# https://smith.langchain.com/hub/hwchase17/react
+agent_prompt = ChatPromptTemplate(
+    [
+        ("system", react_prompt),
+        ("placeholder", "{chat_history}"),
+        ("human", "Question: {input}\nThought: {agent_scratchpad}"),
+    ]
 )
