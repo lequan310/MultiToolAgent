@@ -1,4 +1,8 @@
 from app.config import os
+from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_community.tools.pubmed.tool import PubmedQueryRun
+from langchain_community.tools import WikipediaQueryRun
+from langchain_community.utilities import WikipediaAPIWrapper
 from langchain.agents import AgentExecutor, create_react_agent
 from app.agent.prompts.agent import agent_prompt
 from langchain_community.agent_toolkits.load_tools import load_tools
@@ -24,7 +28,13 @@ llm = HuggingFaceEndpoint(
 chat_model = ChatHuggingFace(llm=llm)
 chat_history = []
 
-tools = [pubmed_tool, wikipedia_tool, search_tool]
+custom_tools = [pubmed_tool, wikipedia_tool, search_tool]
+tools = [
+    WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper()),
+    PubmedQueryRun(),
+    TavilySearchResults(max_results=3),
+]
+
 
 agent = create_react_agent(llm=chat_model, tools=tools, prompt=agent_prompt)
 agent_executor = AgentExecutor(
