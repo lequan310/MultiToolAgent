@@ -28,11 +28,27 @@ workflow = create_react_agent(
 )
 
 
-def get_agent_response(message: str):
-    config = {"configurable": {"thread_id": "1"}}
+def get_response_from_stream(message: str):
+    config = {"configurable": {"thread_id": "1"}, "recursion_limit": 6}
     input = {"messages": message}
+    output = []
 
-    response = workflow.invoke(input=input, config=config, stream_mode="values")
-    response = response["messages"][-1].content
-    print(response)
+    for chunk in workflow.stream(input=input, config=config, stream_mode="values"):
+        # Print to track the response
+        message = chunk["messages"][-1]
+        if isinstance(message, tuple):
+            print(message)
+        else:
+            message.pretty_print()
+
+        # Get the content of the response
+        content = message.content
+        output.append(content)
+
+    return output[-1]
+
+
+def get_agent_response(message: str):
+    response = get_response_from_stream(message)
+
     return response
