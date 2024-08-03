@@ -16,15 +16,16 @@ from app.config import os
 
 llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
 memory = MemorySaver()
-
 custom_tools = [pubmed_tool, wikipedia_tool, search_tool]
 tools = [
     WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper()),
     PubmedQueryRun(),
     TavilySearchResults(max_results=3),
 ]
-
-workflow = create_react_agent(llm, tools=tools, checkpointer=memory)
+system_prompt = "You are an efficient agent. Answer questions as short as possible."
+workflow = create_react_agent(
+    llm, tools=tools, checkpointer=memory, state_modifier=system_prompt
+)
 
 
 def get_agent_response(message: str):
