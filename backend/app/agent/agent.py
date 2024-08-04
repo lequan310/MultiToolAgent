@@ -10,7 +10,6 @@ from app.agent.tools.wikipedia import wikipedia_tool
 from app.agent.tools.tavily import search_tool
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, AIMessage
-from app.config import os
 
 # from app.agent.tools.get_intent import get_intent
 
