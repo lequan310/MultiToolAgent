@@ -13,5 +13,5 @@ router = APIRouter()
 )
 async def get_chat_response(chat_request: ChatRequest):
     # TODO: Get chat response from AI agent
-    response = await get_agent_response(chat_request.message)
+    response = get_agent_response(chat_request.message)
     return JSONResponse(content={"message": response})

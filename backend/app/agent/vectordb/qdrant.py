@@ -1,10 +1,11 @@
 from qdrant_client import QdrantClient, models
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import PDFMinerLoader
 from typing import List
+from app.config import os
 
 
 class QdrantDB:
@@ -12,8 +13,8 @@ class QdrantDB:
         self,
         host: str = None,
         port: int = None,
-        vector_size: int = 384,
-        embeddings: HuggingFaceEndpointEmbeddings = None,
+        vector_size: int = 768,
+        embeddings: GoogleGenerativeAIEmbeddings = None,
     ):
         self.client = QdrantClient(host=host, port=port)
         self.vector_size: int = vector_size

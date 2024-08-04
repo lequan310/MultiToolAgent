@@ -1,12 +1,9 @@
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from app.config import os
 from app.agent.vectordb.qdrant import QdrantDB
 import asyncio
 
-embeddings = HuggingFaceEndpointEmbeddings(
-    huggingfacehub_api_token=os.getenv("HF_API_TOKEN"),
-    repo_id="BAAI/bge-small-en-v1.5",  # Equivalent of default Qdrant FastEmbed text embeddings
-)
+embeddings = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
 qdrant = QdrantDB(
     host=os.getenv("QDRANT_HOST"),
     port=int(os.getenv("QDRANT_PORT")),
