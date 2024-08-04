@@ -31,7 +31,7 @@ workflow = create_react_agent(
 def get_response_from_stream(message: str):
     config = {"configurable": {"thread_id": "1"}, "recursion_limit": 6}
     input = {"messages": message}
-    output = []
+    output = ""
 
     for chunk in workflow.stream(input=input, config=config, stream_mode="values"):
         # Print to track the response
@@ -42,10 +42,9 @@ def get_response_from_stream(message: str):
             message.pretty_print()
 
         # Get the content of the response
-        content = message.content
-        output.append(content)
+        output = message.content
 
-    return output[-1]
+    return output
 
 
 def get_agent_response(message: str):
