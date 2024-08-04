@@ -10,6 +10,7 @@ router = APIRouter()
 )
 async def get_file_content(file: UploadFile = File(...)):
     result = await get_pdf_content(file)
+    print(result)
 
     return {
         "filename": file.filename,

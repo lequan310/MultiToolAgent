@@ -2018,6 +2018,21 @@ htmlsoup = ["BeautifulSoup4"]
 source = ["Cython (>=3.0.10)"]
 
 [[package]]
+name = "markdown"
+version = "3.6"
+description = "Python implementation of John Gruber's Markdown."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "Markdown-3.6-py3-none-any.whl", hash = "sha256:48f276f4d8cfb8ce6527c8f79e2ee29708508bf4d40aa410fbc3b4ee832c850f"},
+    {file = "Markdown-3.6.tar.gz", hash = "sha256:ed4f41f6daecbeeb96e576ce414c41d2d876daa9a16cb35fa8ed8c2ddfad0224"},
+]
+
+[package.extras]
+docs = ["mdx-gh-links (>=0.2)", "mkdocs (>=1.5)", "mkdocs-gen-files", "mkdocs-literate-nav", "mkdocs-nature (>=0.6)", "mkdocs-section-index", "mkdocstrings[python]"]
+testing = ["coverage", "pyyaml"]
+
+[[package]]
 name = "markdown-it-py"
 version = "3.0.0"
 description = "Python port of markdown-it. Markdown parsing, done right!"
@@ -3308,6 +3323,20 @@ files = [
 
 [package.dependencies]
 PyMuPDFb = "1.24.9"
+
+[[package]]
+name = "pymupdf4llm"
+version = "0.0.10"
+description = "PyMuPDF Utilities for LLM/RAG"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pymupdf4llm-0.0.10-py3-none-any.whl", hash = "sha256:3524b8f67cb5662e9dfa44432b8ffa92aa8254816728779238fa2d1dbe909b73"},
+    {file = "pymupdf4llm-0.0.10.tar.gz", hash = "sha256:8a1f323fb939a350b6e4916ec0f205295c9690458d991dbcda6b5ad1a2af4064"},
+]
+
+[package.dependencies]
+pymupdf = ">=1.24.2"
 
 [[package]]
 name = "pymupdfb"
@@ -5527,4 +5556,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11.0,<3.13.0"
-content-hash = "1c4a2fb5df81d02df0126be162da2de2a104fab94cca368bdd0e3355bf2a694b"
+content-hash = "b72819c29d130a4b00bbe0addee9b265199314a2248120d104bd36880848539b"
