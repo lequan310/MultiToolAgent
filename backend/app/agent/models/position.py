@@ -1,4 +1,3 @@
-from typing import List
 from langchain_core.pydantic_v1 import Field
 from typing_extensions import Annotated, TypedDict, Optional
 
@@ -10,5 +9,5 @@ class Position(TypedDict):
         Annotated[str, Field(description="Position Duration")]
     ] = None
     experience_description: Optional[
-        Annotated[List[str], Field(description="Experience Description")]
+        Annotated[list[str], Field(description="Experience Description")]
     ] = None

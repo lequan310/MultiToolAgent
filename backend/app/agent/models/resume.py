@@ -1,4 +1,3 @@
-from typing import List
 from langchain_core.pydantic_v1 import Field
 from typing_extensions import Annotated, TypedDict, Optional
 from app.agent.models.position import Position
@@ -11,11 +10,11 @@ class Resume(TypedDict):
         Annotated[str, Field(description="Educational Level")]
     ] = None
     positions: Optional[
-        Annotated[List[Position], Field(description="List of Positions")]
+        Annotated[list[Position], Field(description="List of Positions")]
     ] = None
     projects: Optional[
-        Annotated[List[Project], Field(description="List of Projects")]
+        Annotated[list[Project], Field(description="List of Projects")]
     ] = None
     certificates: Optional[
-        Annotated[List[str], Field(description="List of Certificates")]
+        Annotated[list[str], Field(description="List of Certificates")]
     ] = None

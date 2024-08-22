@@ -1,4 +1,3 @@
-from typing import List
 from langchain_core.pydantic_v1 import Field
 from typing_extensions import Annotated, TypedDict, Optional
 
@@ -9,5 +8,5 @@ class Project(TypedDict):
         Annotated[str, Field(description="Project Duration")]
     ] = None
     project_description: Optional[
-        Annotated[List[str], Field(description="Project Description")]
+        Annotated[list[str], Field(description="Project Description")]
     ] = None
