@@ -1,6 +1,6 @@
 from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
-from app.utils.pdf_parser import get_pdf_content
+from src.utils.pdf_handler import get_pdf_content
 
 router = APIRouter()
 

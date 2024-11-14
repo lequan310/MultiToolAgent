@@ -1,10 +1,10 @@
 import uvicorn
-from app.config import os
+from src.config import os
 
 
 def run():
     uvicorn.run(
-        "app.api.app:app",
+        "src.api.app:app",
         host=os.getenv("API_HOST"),
         port=int(os.getenv("API_PORT")),
         reload=True,
